@@ -21,7 +21,7 @@ Welcome to **Atomic Parfums** — a modern, responsive web app for a boutique fr
 
 ## ⚙️ Setup Instructions
 
-### 1. Clone the Repository
+### Clone the Repository and Enjoy 
 
 ```bash
 git clone https://github.com/your-username/atomic-parfums.git
