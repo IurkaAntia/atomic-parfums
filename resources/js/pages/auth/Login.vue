@@ -1,13 +1,13 @@
 <script setup lang="ts">
-import InputError from '@/components/InputError.vue';
-import TextLink from '@/components/TextLink.vue';
-import { Button } from '@/components/ui/button';
-import { Checkbox } from '@/components/ui/checkbox';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import AuthBase from '@/layouts/AuthLayout.vue';
+
 import { Head, Link, useForm } from '@inertiajs/vue3';
 import { LoaderCircle } from 'lucide-vue-next';
+import { Button } from '@/components/ui/button';
+import Input from '@/components/ui/input/Input.vue';
+import AuthSimpleLayout from '@/layouts/auth/AuthSimpleLayout.vue';
+import Checkbox from '@/components/ui/checkbox/Checkbox.vue';
+import AppLayout from '@/layouts/AppLayout.vue';
+
 
 defineProps<{
     status?: string;
@@ -28,7 +28,10 @@ const submit = () => {
 </script>
 
 <template>
-    <AuthBase title="Log in to your account">
+    <AppLayout>
+
+    <AuthSimpleLayout title="LOGIN INTO YOUR ACC">
+
         <Head title="Log in" />
 
         <div v-if="status" class="mb-4 text-center text-sm font-medium text-green-600">
@@ -50,7 +53,7 @@ const submit = () => {
                         v-model="form.email"
                         placeholder="email@example.com"
                     />
-                    <InputError :message="form.errors.email" />
+
                 </div>
 
                 <div class="grid gap-2">
@@ -65,12 +68,12 @@ const submit = () => {
                         v-model="form.password"
                         placeholder="Password"
                     />
-                    <InputError :message="form.errors.password" />
+
                 </div>
 
                 <div class="flex items-center justify-between">
                     <Label for="remember" class="flex items-center space-x-3">
-                        <Checkbox class="rounded-none" id="remember" v-model="form.remember" :tabindex="3" />
+                        <Checkbox class="rounded-none"></Checkbox>
                         <span>Remember me</span>
                     </Label>
                 </div>
@@ -80,10 +83,10 @@ const submit = () => {
                     Log in
                 </Button>
 
-                <div class="flex justify-center text-gray-400 ">
-                    <TextLink v-if="canResetPassword" :href="route('password.request')" class="text-sm" :tabindex="5">
+                <div class="flex justify-center text-gray-400">
+                    <Link :href="route('password.request')">
                         Forgot your password?
-                    </TextLink>
+                    </Link>
                 </div>
 
                 <Button class=" w-full rounded-none" onclick="route('register')">
@@ -93,5 +96,6 @@ const submit = () => {
             </div>
 
         </form>
-    </AuthBase>
+    </AuthSimpleLayout>
+    </AppLayout>
 </template>

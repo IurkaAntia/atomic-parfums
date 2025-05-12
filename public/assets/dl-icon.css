@@ -1,0 +1,34 @@
+@font-face {
+    font-family: 'dl-icon';
+    src: url('./fonts/dl-icon.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+[class^="dl-icon-"], [class*=" dl-icon-"] {
+    font-family: 'dl-icon' !important;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    display: inline-block;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.dl-icon-search::before {
+    content: "\71"; /* adjust based on exact match */
+}
+.dl-icon-user::before {
+    content: "\31";
+}
+.dl-icon-cart::before {
+    content: "\79";
+}
+.dl-icon-heart::before {
+    content: "\65";
+}
+.dl-icon-menu::before {
+    content: "\64";
+}

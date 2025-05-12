@@ -1,11 +1,9 @@
 <script setup lang="ts">
-import InputError from '@/components/InputError.vue';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import AuthLayout from '@/layouts/AuthLayout.vue';
+
 import { Head, useForm } from '@inertiajs/vue3';
 import { LoaderCircle } from 'lucide-vue-next';
+import Input from '@/components/ui/input/Input.vue';
+import { Button } from '@/components/ui/button';
 
 interface Props {
     token: string;
@@ -31,7 +29,7 @@ const submit = () => {
 </script>
 
 <template>
-    <AuthLayout title="Reset password" description="Please enter your new password below">
+
         <Head title="Reset password" />
 
         <form @submit.prevent="submit">
@@ -39,7 +37,7 @@ const submit = () => {
                 <div class="grid gap-2">
                     <Label for="email">Email</Label>
                     <Input id="email" type="email" name="email" autocomplete="email" v-model="form.email" class="mt-1 block w-full" readonly />
-                    <InputError :message="form.errors.email" class="mt-2" />
+<!--                    <InputError :message="form.errors.email" class="mt-2" />-->
                 </div>
 
                 <div class="grid gap-2">
@@ -54,7 +52,7 @@ const submit = () => {
                         autofocus
                         placeholder="Password"
                     />
-                    <InputError :message="form.errors.password" />
+<!--                    <InputError :message="form.errors.password" />-->
                 </div>
 
                 <div class="grid gap-2">
@@ -68,7 +66,7 @@ const submit = () => {
                         class="mt-1 block w-full"
                         placeholder="Confirm password"
                     />
-                    <InputError :message="form.errors.password_confirmation" />
+
                 </div>
 
                 <Button type="submit" class="mt-4 w-full" :disabled="form.processing">
@@ -77,5 +75,4 @@ const submit = () => {
                 </Button>
             </div>
         </form>
-    </AuthLayout>
 </template>
