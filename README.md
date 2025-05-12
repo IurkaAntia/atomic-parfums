@@ -19,5 +19,18 @@ Welcome to **Atomic Parfums** — a modern, responsive web app for a boutique fr
 - **Routing**: Inertia-powered SPA navigation
 - **Styling**: Tailwind CSS
 
-## 📁 Project Structure
+## ⚙️ Setup Instructions
 
+### 1. Clone the Repository
+
+```bash
+git clone https://github.com/your-username/atomic-parfums.git
+cd atomic-parfums
+
+npm install
+
+cp .env.example .env
+composer install
+php artisan key:generate
+php artisan migrate
+composer run dev
