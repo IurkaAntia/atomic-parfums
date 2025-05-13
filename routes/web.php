@@ -9,7 +9,7 @@ Route::get('/', function () {
 
 Route::get('home', function () {
     return Inertia::render('Home');
-})->name('home');
+})->middleware('auth')->name('home');
 
-require __DIR__.'/settings.php';
-require __DIR__.'/auth.php';
+require __DIR__ . '/settings.php';
+require __DIR__ . '/auth.php';
