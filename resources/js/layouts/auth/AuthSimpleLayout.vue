@@ -8,10 +8,10 @@ defineProps<{
 }>();
 </script>
 <template>
-    <div class="bg-background flex min-h-svh flex-col items-center justify-center gap-6 p-6 md:p-10">
-        <di class="w-full max-w-lg min-w-sm">
-            <div class="flex flex-col gap-10">
-                <div class="flex flex-col items-center gap-4">
+    <div class="bg-background flex min-h-svh flex-col items-center justify-center gap-6 p-6 md:p-8">
+        <div class="w-full max-w-lg min-w-1/4">
+            <div class="flex flex-col gap-8">
+                <div class="flex flex-col items-center">
                     <!--                    <Link :href="route('home')" class="flex flex-col items-center gap-2 font-medium">-->
                     <!--                        <div class="mb-1 flex h-32 w-32 items-center justify-center rounded-md">-->
                     <!--                        </div>-->
@@ -24,6 +24,6 @@ defineProps<{
                 </div>
                 <slot />
             </div>
-        </di>
+        </div>
     </div>
 </template>

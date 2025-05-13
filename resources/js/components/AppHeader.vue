@@ -1,4 +1,8 @@
 <script setup lang="ts">
+import HeaderBanner from '@/components/ui/HeaderBanner.vue';
+import Location from '@/components/ui/Location.vue';
+import HoverModal from '@/components/ui/modal/HoverModal.vue';
+import SidebarModal from '@/components/ui/modal/SidebarModal.vue';
 import { BreadcrumbItem } from '@/types';
 import { Link } from '@inertiajs/vue3';
 
@@ -20,9 +24,21 @@ const navs: BreadcrumbItem[] = [
         href: '/products',
     },
 ];
+
+const cartItems = [
+    { id: 1, name: 'Paraglider', qty: 1 },
+    { id: 2, name: 'Ski Set', qty: 2 },
+    { id: 2, name: 'Ski Set', qty: 2 },
+];
+
+const wishlistItems = [
+    { id: 3, name: 'Climbing Shoes' },
+    { id: 4, name: 'Helmet' },
+];
 </script>
 <template>
-    <header class="sticky top-0 z-50 bg-[#f0ece4] p-5">
+    <HeaderBanner />
+    <header class="sticky top-0 z-50 bg-[#f1ede5] p-5">
         <div class="grid grid-cols-2 items-center lg:grid-cols-3">
             <!-- Breadcrumbs -->
             <div class="hidden justify-center space-x-10 lg:flex">
@@ -43,25 +59,48 @@ const navs: BreadcrumbItem[] = [
             </div>
 
             <!-- Icons -->
-            <div class="col-span-1 flex items-center justify-end space-x-3 text-xl sm:space-x-4">
-                <i class="dl-icon-search hover:cursor-pointer"></i>
-                <i class="dl-icon-user hover:cursor-pointer"></i>
-                <div class="relative">
-                    <i class="dl-icon-cart hover:cursor-pointer"></i>
-                    <span class="absolute -top-2 -right-2 flex h-4 w-4 items-center justify-center rounded-full bg-gray-800 text-xs text-white"
-                        >2</span
-                    >
+            <div class="flex items-center justify-end space-x-3 text-xl sm:space-x-4">
+                <!-- Language Switcher -->
+                <HoverModal>
+                    <template #trigger>
+                        <div class="flex h-full items-center justify-center">
+                            <span class="px-2 text-center text-sm">EN</span>
+                        </div>
+                    </template>
+                    <div class="flex flex-col gap-2 text-center text-sm text-gray-800">
+                        <a href="/register" class="cursor-pointer duration-200 hover:text-gray-400 hover:transition">GE</a>
+                    </div>
+                </HoverModal>
+
+                <!-- Search Icon -->
+                <div class="flex h-full items-center justify-center">
+                    <i class="dl-icon-search hover:cursor-pointer"></i>
                 </div>
-                <div class="relative">
-                    <i class="dl-icon-heart hover:cursor-pointer"></i>
-                    <span class="absolute -top-2 -right-2 flex h-4 w-4 items-center justify-center rounded-full bg-gray-800 text-xs text-white"
-                        >2</span
-                    >
-                </div>
-                <div class="lg:hidden">
+
+                <!-- User Icon -->
+                <HoverModal>
+                    <template #trigger>
+                        <div class="flex h-full items-center justify-center">
+                            <i class="dl-icon-user text-xl hover:cursor-pointer"></i>
+                        </div>
+                    </template>
+                    <div class="flex flex-col gap-2 py-2 text-center text-sm text-gray-800">
+                        <a href="/login" class="cursor-pointer duration-200 hover:text-gray-400 hover:transition">LOGIN</a>
+                        <a href="/register" class="cursor-pointer duration-200 hover:text-gray-400 hover:transition">REGISTER</a>
+                    </div>
+                </HoverModal>
+
+                <!-- Cart Icon -->
+                <SidebarModal title="Your Cart" :items="cartItems" :count="cartItems.length" icon="dl-icon-cart" />
+
+                <!-- Wishlist Icon -->
+                <SidebarModal title="Your Wishlist" :items="wishlistItems" :count="wishlistItems.length" icon="dl-icon-heart" />
+                <!-- Mobile Menu Icon -->
+                <div class="flex items-center justify-center lg:hidden">
                     <i class="dl-icon-menu hover:cursor-pointer"></i>
                 </div>
             </div>
         </div>
     </header>
+    <Location />
 </template>

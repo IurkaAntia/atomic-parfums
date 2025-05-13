@@ -20,15 +20,27 @@
 .dl-icon-search::before {
     content: "\71"; /* adjust based on exact match */
 }
+
 .dl-icon-user::before {
     content: "\31";
 }
+
 .dl-icon-cart::before {
     content: "\79";
 }
+
 .dl-icon-heart::before {
     content: "\65";
 }
+
 .dl-icon-menu::before {
     content: "\64";
+}
+
+.dl-icon-right:before {
+    content: "\2c";
+}
+
+.dl-icon-close:before {
+    content: "\6e";
 }
