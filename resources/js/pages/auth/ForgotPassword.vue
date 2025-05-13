@@ -1,12 +1,10 @@
 <script setup lang="ts">
-
 import AuthLayout from '@/layouts/AuthLayout.vue';
 import { Head, useForm } from '@inertiajs/vue3';
 import { LoaderCircle } from 'lucide-vue-next';
-import AppHeaderLayout from '@/layouts/app/AppHeaderLayout.vue';
-import Input from '@/components/ui/input/Input.vue';
+// import AppHeaderLayout from '@/layouts/app/AppHeaderLayout.vue';
 import { Button } from '@/components/ui/button';
-
+import Input from '@/components/ui/input/Input.vue';
 
 defineProps<{
     status?: string;
@@ -22,10 +20,7 @@ const submit = () => {
 </script>
 
 <template>
-    <AppHeaderLayout>
-
     <AuthLayout>
-
         <Head title="Forgot password" />
 
         <div v-if="status" class="mb-4 text-center text-sm font-medium text-green-600">
@@ -37,7 +32,7 @@ const submit = () => {
                 <div class="grid gap-2">
                     <Label for="email">Email address</Label>
                     <Input id="email" type="email" name="email" autocomplete="off" v-model="form.email" autofocus placeholder="email@example.com" />
-<!--                    <InputError :message="form.errors.email" />-->
+                    <!--                    <InputError :message="form.errors.email" />-->
                 </div>
 
                 <div class="my-6 flex items-center justify-start">
@@ -48,12 +43,10 @@ const submit = () => {
                 </div>
             </form>
 
-            <div class="space-x-1 text-center text-sm text-muted-foreground">
+            <div class="text-muted-foreground space-x-1 text-center text-sm">
                 <span>Or, return to</span>
-<!--                <TextLink :href="route('login')">log in</TextLink>-->
+                <!--                <TextLink :href="route('login')">log in</TextLink>-->
             </div>
         </div>
     </AuthLayout>
-    </AppHeaderLayout>
-
 </template>
