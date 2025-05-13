@@ -1,15 +1,11 @@
 <script setup lang="ts">
 import AppFooter from '@/components/AppFooter.vue';
 import AppHeader from '@/components/AppHeader.vue';
-import type { BreadcrumbItemType } from '@/types';
+// import type { BreadcrumbItemType } from '@/types';
 
-interface Props {
-    breadcrumbs?: BreadcrumbItemType[];
-}
-
-withDefaults(defineProps<Props>(), {
-    breadcrumbs: () => [],
-});
+// interface Props {
+//     breadcrumbs?: BreadcrumbItemType[];
+// }
 </script>
 
 <template>
