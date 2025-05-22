@@ -7,6 +7,7 @@ import { Link } from '@inertiajs/vue3';
         <div class="flex flex-row justify-between p-10 md:flex-col">
             <div class="grid gap-8 md:grid-cols-2">
                 <!-- Helpful Links -->
+
                 <div class="flex flex-col gap-4">
                     <p class="font-bold">HELPFUL LINKS</p>
                     <div class="grid grid-cols-2 gap-2">
@@ -67,6 +68,7 @@ import { Link } from '@inertiajs/vue3';
                 <i class="fa fa-facebook"> </i>
                 <i class="fa fa-instagram"> </i>
                 <i class="fa fa-pinterest"> </i>
+                
             </div>
         </div>
     </footer>
