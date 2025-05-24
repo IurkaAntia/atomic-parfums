@@ -38,7 +38,7 @@ const breakpoints = {
                 <img
                     :src="`/products/${n}.png`"
                     alt="perfume"
-                    class="mx-auto w-44 h-56 object-contain"
+                    class="mx-auto w-60 h-60 object-contain"
                 />
                 <div class="mt-4 text-sm font-medium">LOREM IPSUM DOLOR SIT</div>
                 <div class="mt-2 flex justify-center gap-2 items-center text-sm">
@@ -49,4 +49,3 @@ const breakpoints = {
         </Swiper>
     </div>
 </template>
-

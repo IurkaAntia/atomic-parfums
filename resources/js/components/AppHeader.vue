@@ -3,8 +3,8 @@ import HeaderBanner from '@/components/ui/HeaderBanner.vue';
 import Location from '@/components/ui/Location.vue';
 import HoverModal from '@/components/ui/modal/HoverModal.vue';
 import SidebarModal from '@/components/ui/modal/SidebarModal.vue';
-import { BreadcrumbItem } from '@/types';
-import { Link } from '@inertiajs/vue3';
+import { BreadcrumbItem, SharedData } from '@/types';
+import { Link, usePage } from '@inertiajs/vue3';
 
 const navs: BreadcrumbItem[] = [
     {
@@ -35,6 +35,9 @@ const wishlistItems = [
     { id: 3, name: 'Climbing Shoes' },
     { id: 4, name: 'Helmet' },
 ];
+
+const { props } = usePage<SharedData>();
+const user = props.auth?.user;
 </script>
 <template>
     <HeaderBanner />
@@ -43,7 +46,7 @@ const wishlistItems = [
             <!-- Breadcrumbs -->
             <div class="hidden justify-center space-x-10 lg:flex">
                 <div v-for="nav in navs" :key="nav.href">
-                    <div class="text-sm font-light duration-200 hover:text-gray-400 hover:transition">
+                    <div class="px-2 text-sm font-light duration-200 hover:text-gray-400 hover:transition">
                         <Link :href="nav.href">{{ nav.title }}</Link>
                     </div>
                 </div>
@@ -84,9 +87,16 @@ const wishlistItems = [
                             <i class="dl-icon-user text-xl hover:cursor-pointer"></i>
                         </div>
                     </template>
+
                     <div class="flex flex-col gap-2 py-2 text-center text-sm text-gray-800">
-                        <a href="/login" class="cursor-pointer duration-200 hover:text-gray-400 hover:transition">LOGIN</a>
-                        <a href="/register" class="cursor-pointer duration-200 hover:text-gray-400 hover:transition">REGISTER</a>
+                        <template v-if="user">
+                            <p>{{ user.name }}</p>
+                            <a href="/logout" class="cursor-pointer duration-200 hover:text-gray-400 hover:transition">LOGOUT</a>
+                        </template>
+                        <template v-else>
+                            <a href="/login" class="cursor-pointer duration-200 hover:text-gray-400 hover:transition">LOGIN</a>
+                            <a href="/register" class="cursor-pointer duration-200 hover:text-gray-400 hover:transition">REGISTER</a>
+                        </template>
                     </div>
                 </HoverModal>
 

@@ -36,7 +36,7 @@ import { Link } from '@inertiajs/vue3';
                 </div>
             </div>
         </div>
-        <div class="grid grid-rows-3 p-8 px-10 md:grid-cols-3 md:justify-center">
+        <div class="grid p-8 px-10 md:grid-cols-3 md:justify-center">
             <div class="flex items-center">
                 <ul class="flex flex-row gap-4">
                     <li>
@@ -68,7 +68,6 @@ import { Link } from '@inertiajs/vue3';
                 <i class="fa fa-facebook"> </i>
                 <i class="fa fa-instagram"> </i>
                 <i class="fa fa-pinterest"> </i>
-                
             </div>
         </div>
     </footer>

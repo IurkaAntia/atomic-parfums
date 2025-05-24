@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { Button } from '@/components/ui/button';
+import ParfumeContent from '@/components/ui/content/ParfumeContent.vue';
 import ParfumeSlider from '@/components/ui/slider/ParfumeSlider.vue';
 import Slider from '@/components/ui/slider/Slider.vue';
 import AppLayout from '@/layouts/AppLayout.vue';
@@ -16,8 +17,8 @@ function logout() {
         <div class="flex flex-col">
             <Slider />
             <ParfumeSlider />
-            <div></div>
-            <div></div>
+            <ParfumeContent />
+
             <Button :onclick="logout"> Logout</Button>
         </div>
     </AppLayout>
