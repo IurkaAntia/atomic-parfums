@@ -1,14 +1,13 @@
 <script setup lang="ts">
-import { Button } from '@/components/ui/button';
 import ParfumeContent from '@/components/ui/content/ParfumeContent.vue';
 import ParfumeSlider from '@/components/ui/slider/ParfumeSlider.vue';
 import Slider from '@/components/ui/slider/Slider.vue';
 import AppLayout from '@/layouts/AppLayout.vue';
-import { Head, router } from '@inertiajs/vue3';
+import { Head } from '@inertiajs/vue3';
 
-function logout() {
-    router.post(route('logout'));
-}
+// const { props } = usePage<SharedData>();
+// console.log(props.products);
+// console.log(products);
 </script>
 
 <template>
@@ -18,8 +17,6 @@ function logout() {
             <Slider />
             <ParfumeSlider />
             <ParfumeContent />
-
-            <Button :onclick="logout"> Logout</Button>
         </div>
     </AppLayout>
 </template>

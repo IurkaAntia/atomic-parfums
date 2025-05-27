@@ -21,6 +21,7 @@ class CreateProductsTable extends Migration
             $table->string('image')->nullable();
             $table->integer('quantity')->default(0);
             $table->decimal('price', 10, 2);
+            $table->decimal('discount', 10, 2)->nullable();
             $table->decimal('sale_price', 10, 2)->nullable();
             $table->timestamps();
 

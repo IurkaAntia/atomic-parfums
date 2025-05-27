@@ -4,8 +4,18 @@ import Location from '@/components/ui/Location.vue';
 import HoverModal from '@/components/ui/modal/HoverModal.vue';
 import SidebarModal from '@/components/ui/modal/SidebarModal.vue';
 import { BreadcrumbItem, SharedData } from '@/types';
-import { Link, usePage } from '@inertiajs/vue3';
+import { Link, router, usePage } from '@inertiajs/vue3';
+import { computed } from 'vue';
+const page = usePage<SharedData>();
 
+const user = computed(() => page.props.auth?.user);
+const wishlist = computed(() => page.props.wishlist);
+const cart = computed(() => page.props.cart);
+
+
+const logout = () => {
+    router.post('logout');
+};
 const navs: BreadcrumbItem[] = [
     {
         title: 'THE HOUSE',
@@ -25,19 +35,7 @@ const navs: BreadcrumbItem[] = [
     },
 ];
 
-const cartItems = [
-    { id: 1, name: 'Paraglider', qty: 1 },
-    { id: 2, name: 'Ski Set', qty: 2 },
-    { id: 2, name: 'Ski Set', qty: 2 },
-];
-
-const wishlistItems = [
-    { id: 3, name: 'Climbing Shoes' },
-    { id: 4, name: 'Helmet' },
-];
-
-const { props } = usePage<SharedData>();
-const user = props.auth?.user;
+console.log('wishlist', wishlist.value);
 </script>
 <template>
     <HeaderBanner />
@@ -91,7 +89,7 @@ const user = props.auth?.user;
                     <div class="flex flex-col gap-2 py-2 text-center text-sm text-gray-800">
                         <template v-if="user">
                             <p>{{ user.name }}</p>
-                            <a href="/logout" class="cursor-pointer duration-200 hover:text-gray-400 hover:transition">LOGOUT</a>
+                            <a :onclick="logout" class="cursor-pointer duration-200 hover:text-gray-400 hover:transition">LOGOUT</a>
                         </template>
                         <template v-else>
                             <a href="/login" class="cursor-pointer duration-200 hover:text-gray-400 hover:transition">LOGIN</a>
@@ -101,10 +99,16 @@ const user = props.auth?.user;
                 </HoverModal>
 
                 <!-- Cart Icon -->
-                <SidebarModal title="Your Cart" :items="cartItems" :count="cartItems.length" icon="dl-icon-cart" />
+                <SidebarModal title="Your Cart" :items="cart || []" :count="Array.isArray(cart) ? cart.length : ''" icon="dl-icon-cart" type="cart" />
 
                 <!-- Wishlist Icon -->
-                <SidebarModal title="Your Wishlist" :items="wishlistItems" :count="wishlistItems.length" icon="dl-icon-heart" />
+                <SidebarModal
+                    title="Your Wishlist"
+                    :items="wishlist || []"
+                    :count="Array.isArray(wishlist) ? wishlist.length : ''"
+                    icon="dl-icon-heart"
+                    type="wishlist"
+                />
                 <!-- Mobile Menu Icon -->
                 <div class="flex items-center justify-center lg:hidden">
                     <i class="dl-icon-menu hover:cursor-pointer"></i>
