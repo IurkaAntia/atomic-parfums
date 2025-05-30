@@ -8,7 +8,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use Illuminate\View\View;
+use App\Models\Wishlist;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -31,8 +31,17 @@ class AuthenticatedSessionController extends Controller
     public function store(LoginRequest $request): RedirectResponse
     {
         $request->authenticate();
-
         $request->session()->regenerate();
+
+        // Get the logged-in user
+        $user = Auth::user();
+
+        // Transfer wishlist items saved by IP to the user
+        Wishlist::where('ip_address', $request->ip())
+            ->whereNull('user_id')
+            ->update([
+                'user_id' => $user->id,
+            ]);
 
         return redirect()->intended(route('home', absolute: false));
     }

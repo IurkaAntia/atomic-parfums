@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Wishlist extends Model
 {
     protected $table = 'wishlist';
-    protected $fillable = ['user_id', 'product_id'];
+    protected $fillable = ['user_id', 'product_id', 'ip_address'];
 
     protected $hidden = ['created_at', 'updated_at'];
 

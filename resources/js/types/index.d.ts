@@ -32,6 +32,8 @@ export interface SharedData extends PageProps {
     wishlist?: Wishlist[]; // List of wishlist items
     checkout?: Checkout[]; // List of checkout entries
     cart?: Cart[]; // List of cart items
+    services?: Services[]; // List of services
+    gallery?: Gallery[]; // List of gallery items
 }
 
 export interface User {
@@ -98,6 +100,23 @@ export interface Cart {
     productId: number;
     userId: number;
     quantity: number;
+    createdAt: Date;
+    updatedAt: Date;
+}
+
+export interface Services {
+    id: number;
+    description: string;
+    icon: string;
+    createdAt: Date;
+    updatedAt: Date;
+}
+
+export interface Gallery {
+    id: number;
+    productId: number;
+    title: string;
+    image: string;
     createdAt: Date;
     updatedAt: Date;
 }

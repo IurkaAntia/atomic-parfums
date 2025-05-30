@@ -1,3 +1,63 @@
+<script setup lang="ts">
+    import { ref } from 'vue';
+    import { computed } from 'vue';
+    import { useForm } from '@inertiajs/vue3';
+    import  Button  from '@/components/ui/button/Button.vue';
+
+    const props = defineProps({
+        title: { type: String, required: true },
+        items: { type: Array, default: () => [] },
+        icon: { type: String, default: 'dl-icon-cart' },
+        count: { type: Number, default: 0 },
+        type: { type: String, default: 'cart' }
+    });
+
+
+    const isOpen = ref(false);
+    const isSubmitted = ref(false);
+
+    const removeItem = (itemId: number) => {
+        if (isSubmitted.value) return;
+        isSubmitted.value = true;
+
+        const form = useForm({});
+        const routeName = props.type === 'wishlist' ? 'wishlist.remove' : 'cart.remove';
+
+        form.delete(route(routeName, itemId), {
+            preserveState: true,
+            preserveScroll: true,
+            onFinish: () => {
+                isSubmitted.value = false;
+            },
+            onSuccess: () => {
+                form.reset();
+            },
+        });
+    };
+
+
+    const total = computed(() => {
+        if (props.type !== 'cart') return 0;
+        
+        return props.items.reduce((sum, item) => {
+            if (!item.product) return sum;
+
+            const price = item.product.sale_price ?? item.product.price;
+            const quantity = item.quantity ?? 1;
+            return sum + price * quantity;
+        }, 0);
+    });
+
+
+    const openSidebar = () => {
+        isOpen.value = true;
+    };
+
+    const closeSidebar = () => {
+        isOpen.value = false;
+    };
+</script>
+
 <template>
     <div class="relative flex items-center justify-center">
         <!-- Trigger -->
@@ -65,7 +125,7 @@
                     <Button @click="" class="w-full">
                         CHECKOUT
                     </Button>
-                    <Button @click="" class="w-full">
+                    <Button @click="route('cart.index')" class="w-full">
                         VIEW CART
                     </Button>
                 </div>
@@ -81,55 +141,4 @@
     </div>
 </template>
 
-<script setup lang="ts">
-import { ref } from 'vue';
-import { computed } from 'vue';
-import { useForm } from '@inertiajs/vue3';
-import  Button  from '@/components/ui/button/Button.vue';
 
-const props = defineProps({
-    title: { type: String, required: true },
-    items: { type: Array, default: () => [] },
-    icon: { type: String, default: 'dl-icon-cart' },
-    count: { type: Number, default: 0 },
-    type: { type: String, default: 'cart' }
-});
-
-
-const isOpen = ref(false);
-
-
-const removeItem = (itemId: number) => {
-    const form = useForm({});
-    const routeName = props.type === 'wishlist' ? 'wishlist.remove' : 'cart.remove';
-
-    form.delete(route(routeName, itemId), {
-        preserveScroll: true,
-        onSuccess: () => {
-            form.reset();
-        },
-    });
-};
-
-
-const total = computed(() => {
-    if (props.type !== 'cart') return 0;
-
-    return props.items.reduce((sum, item) => {
-        if (!item.product) return sum;
-
-        const price = item.product.sale_price ?? item.product.price;
-        const quantity = item.quantity ?? 1;
-        return sum + price * quantity;
-    }, 0);
-});
-
-
-const openSidebar = () => {
-    isOpen.value = true;
-};
-
-const closeSidebar = () => {
-    isOpen.value = false;
-};
-</script>

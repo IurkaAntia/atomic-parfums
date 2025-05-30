@@ -18,11 +18,11 @@ class CartController extends Controller
                     ->get();
 
                 // Return the wishlist data
-        return inertia('Home', [
+        return inertia('Cart', [
             'cart' => $cart,
         ]);
     }
-
+    
     /**
      * Show the form for creating a new resource.
      */
@@ -52,7 +52,7 @@ class CartController extends Controller
              ]
          );
 
-         return back(); // or use Inertia::location(route('home')) if needed
+         return back()->with('message', 'Added to cart'); 
      }
 
     /**
@@ -86,12 +86,11 @@ class CartController extends Controller
      {
          // Optionally, make sure user owns the cart item
          if ($cart->user_id !== auth()->id()) {
-             abort(403);
+             return back()->with('error', 'Unauthorized action.');
          }
 
          $cart->delete();
-
-         return redirect()->back(); // or return a 200 JSON if using JS
+         return back()->with('message', 'deleted successfuly'); // or return a 200 JSON if using JS
      }
 
 }

@@ -34,31 +34,34 @@ class WishlistController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-     public function store(Request $request)
-     {
-         $request->validate([
-             'product_id' => 'required|exists:products,id',
-         ]);
+    public function store(Request $request)
+    {
+        $request->validate([
+            'product_id' => 'required|exists:products,id',
+        ]);
 
-         // Check if the product is already in the wishlist
-         $existingWishlistItem = Wishlist::where('user_id', Auth::id())
-             ->where('product_id', $request->product_id)
-             ->first();
+        $userId = Auth::id();
+        $ip = $request->ip();
 
-         if ($existingWishlistItem) {
-             // Return a JSON response indicating the product is already in the wishlist
-             return back()->with('message', 'Already in wishlist');
-         }
+        // Check for existing item by user_id or ip_address
+        $existingWishlistItem = Wishlist::where('product_id', $request->product_id)
+            ->when($userId, fn($query) => $query->where('user_id', $userId))
+            ->when(!$userId, fn($query) => $query->where('ip_address', $ip))
+            ->first();
 
-         // Add the product to the wishlist
-         Wishlist::create([
-             'user_id' => Auth::id(),
-             'product_id' => $request->product_id,
-         ]);
+        if ($existingWishlistItem) {
+            return back()->with('message', 'Already in wishlist');
+        }
+        
+        Wishlist::create([
+            'product_id' => $request->product_id,
+            'user_id' => $userId,
+            'ip_address' => $ip,
+        ]);
 
-         // Return a success response
-         return back()->with('message', 'Added to wishlist');
-     }
+        return back()->with('message', 'Added to wishlist');
+    }
+
 
 
     /**
@@ -92,9 +95,11 @@ class WishlistController extends Controller
     {
 
         // Optionally, make sure user owns the cart item
-        if ($wishlist->user_id !== auth()->id()) {
+        if ((auth()->check() && $wishlist->user_id !== auth()->id()) ||(!auth()->check() && $wishlist->ip_address !== request()->ip())) {
             abort(403);
         }
+
+
 
         $wishlist->delete();
 

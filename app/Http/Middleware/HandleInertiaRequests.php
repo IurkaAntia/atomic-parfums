@@ -8,6 +8,7 @@ use Inertia\Middleware;
 use Tighten\Ziggy\Ziggy;
 use App\Models\Wishlist;
 use App\Models\Cart;
+use App\Models\Services;
 use Illuminate\Support\Facades\Auth;
 
 class HandleInertiaRequests extends Middleware
@@ -54,8 +55,9 @@ class HandleInertiaRequests extends Middleware
                 'location' => $request->url(),
             ],
             // 'sidebarOpen' => ! $request->hasCookie('sidebar_state') || $request->cookie('sidebar_state') === 'true',
-            'wishlist' => fn () => Auth::check() ? Wishlist::with('product')->where('user_id', Auth::id())->get() : [],
-            'cart' => fn () => Auth::check() ? Cart::with('product')->where('user_id', Auth::id())->get() : [],
+            'wishlist' => fn () => Auth::check() ? Wishlist::with('product')->where('user_id', Auth::id())->get() : Wishlist::with('product')->where('ip_address', $request->ip())->get(),
+            'cart' => fn () => Auth::check() ? Cart::with('product')->where('user_id', Auth::id())->get() : Cart::with('product')->where('user_id', Auth::id())->get(),
+            'services' => fn () => Services::all(),
         ];
     }
 }

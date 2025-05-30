@@ -4,17 +4,17 @@ import Location from '@/components/ui/Location.vue';
 import HoverModal from '@/components/ui/modal/HoverModal.vue';
 import SidebarModal from '@/components/ui/modal/SidebarModal.vue';
 import { BreadcrumbItem, SharedData } from '@/types';
-import { Link, router, usePage } from '@inertiajs/vue3';
+import { Link, useForm, usePage } from '@inertiajs/vue3';
 import { computed } from 'vue';
 const page = usePage<SharedData>();
 
 const user = computed(() => page.props.auth?.user);
 const wishlist = computed(() => page.props.wishlist);
 const cart = computed(() => page.props.cart);
-
+const form = useForm<any>();
 
 const logout = () => {
-    router.post('logout');
+    form.post(route('logout'));
 };
 const navs: BreadcrumbItem[] = [
     {
@@ -35,7 +35,6 @@ const navs: BreadcrumbItem[] = [
     },
 ];
 
-console.log('wishlist', wishlist.value);
 </script>
 <template>
     <HeaderBanner />

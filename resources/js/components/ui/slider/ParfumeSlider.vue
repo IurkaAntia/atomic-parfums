@@ -2,12 +2,14 @@
 import { Swiper, SwiperSlide } from 'swiper/vue';
 import { Pagination, Autoplay } from 'swiper/modules';
 import { usePage, useForm, Link,router } from '@inertiajs/vue3';
+import { SharedData } from '@/types';
+import { ref } from 'vue';
 import 'swiper/css';
 import 'swiper/css/pagination';
-import { SharedData } from '@/types';
 
 const { props } = usePage<SharedData>();
 const products = props.products;
+const isSubmitting = ref(false)
 
 const breakpoints = {
     0: { slidesPerView: 1 },
@@ -17,15 +19,16 @@ const breakpoints = {
 
 const addToWishlist = (productId: number) => {
     const form = useForm({ product_id: productId });
+    if (isSubmitting.value) return;
+    isSubmitting.value = true;
+
     form.post(route('wishlist.add'), {
         preserveScroll: true,
-        onSuccess: () => {
-            router.reload({ only: ['wishlist'] });
+        preserveState: true,
+        onFinish: () => {
+            isSubmitting.value = false
         },
     });
-    // form.post(route('wishlist.add'), {
-    //     preserveScroll: true,
-    // });
 };
 </script>
 
@@ -90,9 +93,9 @@ const addToWishlist = (productId: number) => {
                 </div>
 
                 <div class="mt-2 flex justify-center gap-2 items-center text-sm">
-                    <span v-if="product.sale_price" class="font-semibold">₾{{ product.sale_price }}</span>
-                    <span v-if="product.sale_price" class="line-through text-gray-400">₾{{ product.price }}</span>
-                    <span v-else class="font-semibold">₾{{ product.price }}</span>
+                    <span v-if="product.sale_price" class="font-semibold">₾{{ product.sale_price.toFixed(2) }}</span>
+                    <span v-if="product.sale_price" class="line-through text-gray-400">₾{{ product.price.toFixed(2) }}</span>
+                    <span v-else class="font-semibold">₾{{ product.price.toFixed(2) }}</span>
                 </div>
             </SwiperSlide>
         </Swiper>
