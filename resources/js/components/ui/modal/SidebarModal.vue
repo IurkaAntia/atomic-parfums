@@ -3,6 +3,12 @@
     import { computed } from 'vue';
     import { useForm } from '@inertiajs/vue3';
     import  Button  from '@/components/ui/button/Button.vue';
+    import { router } from '@inertiajs/vue3';
+
+    const goToPage = (page: string) => {
+        router.visit(route(page));
+    };
+
 
     const props = defineProps({
         title: { type: String, required: true },
@@ -125,12 +131,12 @@
                     <Button @click="" class="w-full">
                         CHECKOUT
                     </Button>
-                    <Button @click="route('cart.index')" class="w-full">
+                   <Button @click="goToPage('cart.index')" class="w-full">
                         VIEW CART
                     </Button>
                 </div>
                 <div v-if="type === 'wishlist'" class=" flex flex-col mt-10 space-y-4 items-center">
-                    <Button @click="" class="w-full">
+                    <Button @click="goToPage('wishlist.index')" class="w-full">
                         VIEW WISHLIST
                     </Button>
 

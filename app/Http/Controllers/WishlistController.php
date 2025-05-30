@@ -18,9 +18,10 @@ class WishlistController extends Controller
                     ->get();
 
         // Return the wishlist data as JSON
-        return response()->json([
+        return inertia('Wishlist', [
             'wishlist' => $wishlist,
         ]);
+    
     }
 
     /**
