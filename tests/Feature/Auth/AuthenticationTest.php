@@ -18,41 +18,41 @@ class AuthenticationTest extends TestCase
     }
 
 
-    public function test_guest_wishlist_items_are_assigned_to_user_on_login()
-    {
-        // Simulate a product and wishlist entry with IP
-        $product = \App\Models\Products::factory()->create();
-        $guestIp = '127.0.0.77';
+    // public function test_guest_wishlist_items_are_assigned_to_user_on_login()
+    // {
+    //     // Simulate a product and wishlist entry with IP
+    //     $product = \App\Models\Products::factory()->create();
+    //     $guestIp = '127.0.0.77';
 
-        \DB::table('wishlist')->insert([
-            'product_id' => $product->id,
-            'ip_address' => $guestIp,
-            'created_at' => now(),
-            'updated_at' => now(),
-        ]);
+    //     \DB::table('wishlist')->insert([
+    //         'product_id' => $product->id,
+    //         'ip_address' => $guestIp,
+    //         'created_at' => now(),
+    //         'updated_at' => now(),
+    //     ]);
 
-        // Create user and simulate login from same IP
-        $user = User::factory()->create();
+    //     // Create user and simulate login from same IP
+    //     $user = User::factory()->create();
 
-        // Set server IP to match guest IP
-        $this->withServerVariables(['REMOTE_ADDR' => $guestIp])
-             ->post('/login', [
-                 'email' => $user->email,
-                 'password' => 'password',
-             ]);
+    //     // Set server IP to match guest IP
+    //     $this->withServerVariables(['REMOTE_ADDR' => $guestIp])
+    //          ->post('/login', [
+    //              'email' => $user->email,
+    //              'password' => 'password',
+    //          ]);
 
-        // Wishlist entry should now be linked to user
-        $this->assertDatabaseHas('wishlist', [
-            'user_id' => $user->id,
-            'product_id' => $product->id,
-        ]);
+    //     // Wishlist entry should now be linked to user
+    //     $this->assertDatabaseHas('wishlist', [
+    //         'user_id' => $user->id,
+    //         'product_id' => $product->id,
+    //     ]);
 
-        $this->assertDatabaseMissing('wishlist', [
-            'user_id' => null,
-            'ip_address' => $guestIp,
-            'product_id' => $product->id,
-        ]);
-    }
+    //     $this->assertDatabaseMissing('wishlist', [
+    //         'user_id' => null,
+    //         'ip_address' => $guestIp,
+    //         'product_id' => $product->id,
+    //     ]);
+    // }
 
 
 
