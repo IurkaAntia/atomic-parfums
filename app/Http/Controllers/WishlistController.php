@@ -16,7 +16,6 @@ class WishlistController extends Controller
         $wishlist = Wishlist::with('product')
                     ->where('user_id', Auth::id())
                     ->get();
-
         // Return the wishlist data as JSON
         return inertia('Wishlist', [
             'wishlist' => $wishlist,
@@ -99,8 +98,6 @@ class WishlistController extends Controller
         if ((auth()->check() && $wishlist->user_id !== auth()->id()) ||(!auth()->check() && $wishlist->ip_address !== request()->ip())) {
             abort(403);
         }
-
-
 
         $wishlist->delete();
 
