@@ -13,6 +13,6 @@ class ExampleTest extends TestCase
     {
         $response = $this->get('/home');
 
-        $response->assertStatus(302);
+        $response->assertStatus(200);
     }
 }
